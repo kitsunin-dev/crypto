@@ -16,7 +16,7 @@ public:
     ~MainWindow();
 
 public slots:
-    void cipherText();
+    void cipherText(bool flag);
 
 private slots:
     void on_comboBox_activated(int index);

@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "encrypt.h"
+#include "crypt.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     const QStringList ciphers = {"Choose cipher...", "Atbash", "Caesar", "Playfair", "Vigenère"};
 
     this->setFixedSize(QSize(450, 400));
-    this->setWindowTitle("Cryptographer 0.1");
+    this->setWindowTitle("Cryptographer GUI");
 
     ui->setupUi(this);
 
@@ -22,27 +22,27 @@ MainWindow::MainWindow(QWidget *parent)
     ui->outputText->setPlaceholderText("Encrypted message will appear here...");
     ui->comboBox->addItems(ciphers);
 
-    connect(ui->encrButton, &QPushButton::clicked, this, &MainWindow::cipherText);
+    connect(ui->encrButton, &QPushButton::clicked, this, [this]{MainWindow::cipherText(1);});
+    connect(ui->decrButton, &QPushButton::clicked, this, [this]{MainWindow::cipherText(0);});
 }
 
-void MainWindow::cipherText()
+void MainWindow::cipherText(bool flag)
 {
-    QString text = ui->inputText->toPlainText();
-    Encrypt encrypter(text);
+    Crypt crypter(ui->inputText->toPlainText());
 
     switch(ui->comboBox->currentIndex())
     {
         case 1:
-            ui->outputText->setPlainText(encrypter.atbash());
+            ui->outputText->setPlainText(crypter.atbash());
             break;
         case 2:
-            ui->outputText->setPlainText(encrypter.caesar(ui->spinBox->value()));
+            ui->outputText->setPlainText(crypter.caesar(ui->spinBox->value(), flag));
             break;
         case 3:
-            ui->outputText->setPlainText(encrypter.playfair(ui->keyEdit->text()));
+            ui->outputText->setPlainText(crypter.playfair(ui->keyEdit->text(), flag));
             break;
         case 4:
-            ui->outputText->setPlainText(encrypter.vigenere(ui->keyEdit->text()));
+            ui->outputText->setPlainText(crypter.vigenere(ui->keyEdit->text(), flag));
             break;
         default:
             break;

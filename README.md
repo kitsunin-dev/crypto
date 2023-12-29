@@ -1,12 +1,10 @@
-# Cryptographer (ver. 0.1)
-This is a desktop application for encrypting messages with different ciphers made with Qt/C++.
+# Cryptographer GUI
+This is a desktop application for encrypting and decrypting messages with classical ciphers made with C++/Qt.
 So far, the following ciphers have been implemented in the application:
 1. Atbash
 2. Caesar
 3. Playfair
 4. Vigenère
-
-Right now, only the encryption function is available. Decryption will be added later.
 
 Example of encrypting a message using Playfair's cipher:
 
